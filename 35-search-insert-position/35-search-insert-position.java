@@ -1,15 +1,23 @@
 class Solution {
-       public int searchInsert(int[] nums, int target) {
-        ArrayList<Integer> result =new ArrayList<>();
-        for(int i:nums){
-            result.add(i);
+    public int searchInsert(int[] nums, int target) {
+        if (nums[0] > target) {
+            return 0;
+        } else if (nums[nums.length - 1] < target) {
+            return nums.length;
         }
-        if(result.contains(target)){
-            return result.indexOf(target);
+
+        int start = 0, end = nums.length - 1;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
         }
-        result.add(target);
-        Collections.sort(result);
-        return result.indexOf(target);
-       
+        
+        return Math.min(start, end) + 1;
     }
 }
